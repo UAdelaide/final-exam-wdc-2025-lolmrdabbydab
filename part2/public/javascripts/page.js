@@ -53,10 +53,7 @@ if (loginForm) {
   loginForm.addEventListener('submit', login);
 }
 
-/*
- * Fetches all dogs from -> fetches random image from external API -> builds
- * and displays the HTML table on the homepage.
- */
+// Fetches all dogs from -> fetches random image from external API -> builds & displays table on homepage
 async function loadAllDogsTable() {
     try {
         // 1. Fetch the list of all dogs from our own API.
