@@ -37,11 +37,11 @@ let pool;
 
     app.locals.pool = pool;
 
-    // 4. Create tables from dogwalks.sql
+    // Create tables
     const schemaSql = require('fs').readFileSync(require('path').join(__dirname, 'dogwalks.sql'), 'utf8');
     await pool.query(schemaSql);
 
-    // 5. Insert seed data if tables are empty
+    // Insert seed data (empty)
     const [userRows] = await pool.query('SELECT COUNT(*) AS count FROM Users');
     if (userRows[0].count === 0) {
       console.log('Tables are empty, inserting seed data...');
