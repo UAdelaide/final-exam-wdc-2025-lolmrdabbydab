@@ -71,7 +71,7 @@ router.post('/login', async (req, res) => {
 
 // POST /logout
 router.post('/logout', (req, res) => {
-    // removes the session data from server's store
+    // removes session data from server's store
     req.session.destroy(err => {
       if (err) {
         return res.status(500).json({ error: 'Could not log out, please try again.' });
@@ -80,6 +80,6 @@ router.post('/logout', (req, res) => {
       res.clearCookie('connect.sid');
       res.status(200).json({ message: 'Logout successful' });
     });
-  });
+});
 
 module.exports = router;
