@@ -75,6 +75,25 @@
           }
         }
 
+        async function getCurrentUser() {
+          try {
+            // Fetch session data
+            const res = await fetch('/api/users/me');
+
+            // If user is not logged in, the server will send an error
+            if (!res.ok) {
+              // Redirect to login page if session is invalid or expired
+              window.location.href = '/';
+              throw new Error('Not logged in.');
+            }
+
+            // Store the fetched user object
+            currentUser.value = await res.json();
+          } catch (err) {
+            error.value = err.message;
+          }
+        }
+
         async function logout() {
           try {
             // Send POST request to logout endpoint
