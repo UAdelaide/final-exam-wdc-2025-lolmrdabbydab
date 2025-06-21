@@ -56,9 +56,7 @@
           }
         }
 
-        // Modified applyToWalk function to use dynamic user ID
         async function applyToWalk(requestId) {
-          // Add check to ensure user's data is avaliable before applying
           if (!currentUser.value) {
             error.value = 'Could not verify user. Please log in again.';
             return;
@@ -68,7 +66,6 @@
             const res = await fetch(`/api/walks/${requestId}/apply`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              // Use user_id from currentUser object instead of hardcoded value
               body: JSON.stringify({ walker_id: currentUser.value.user_id })
             });
             const result = await res.json();
