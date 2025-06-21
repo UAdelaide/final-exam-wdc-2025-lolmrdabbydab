@@ -17,7 +17,7 @@ function login(event) {
     // AJAX Request
     var xmlhttp = new XMLHttpRequest();
 
-    // Define function to run on response
+    // function run on response
     xmlhttp.onreadystatechange = function() {
         if (this.readyState == 4) { // Request is complete
             const responseData = JSON.parse(this.responseText);
