@@ -84,21 +84,21 @@ router.post('/logout', (req, res) => {
 
 // GET dogs belonging to currently logged-in owner
 router.get('/mydogs', async (req, res) => {
-    // Check if user is logged in & is owner.
+    // Check if user is logged in & is owner
     if (!req.session.user || req.session.user.role !== 'owner') {
       return res.status(401).json({ error: 'Unauthorized: You must be an owner to view your dogs.' });
     }
 
-    // Get owner's ID from session.
+    // Get owner's ID from session
     const ownerId = req.session.user.user_id;
 
     try {
-      // Query the database for all dogs where the owner_id matches the logged-in user.
+      // Get all dogs where owner_id matches logged-in user
       const [dogs] = await db.query(
         'SELECT dog_id, name FROM Dogs WHERE owner_id = ?',
         [ownerId]
       );
-      // Return the list of dogs as JSON.
+      // Return JSON list of dogs
       res.json(dogs);
     } catch (error) {
       console.error('Failed to fetch owner dogs:', error);
