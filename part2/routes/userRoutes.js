@@ -35,24 +35,38 @@ router.get('/me', (req, res) => {
   res.json(req.session.user);
 });
 
-// POST login (dummy version)
+// POST /login
 router.post('/login', async (req, res) => {
-  const { email, password } = req.body;
+    const { username, password } = req.body;
 
-  try {
-    const [rows] = await db.query(`
-      SELECT user_id, username, role FROM Users
-      WHERE email = ? AND password_hash = ?
-    `, [email, password]);
+    try {
+      // Find the user in the database by their username and password hash
+      const [rows] = await db.query(`
+        SELECT user_id, username, role FROM Users
+        WHERE username = ? AND password_hash = ?
+      `, [username, password]); // Using username as per video transcript
 
-    if (rows.length === 0) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      // If no user is found, send an error
+      if (rows.length === 0) {
+        return res.status(401).json({ error: 'Invalid username or password' });
+      }
+
+      const user = rows[0];
+
+      // --- IMPORTANT: Store user info in the session ---
+      req.session.user = {
+        user_id: user.user_id,
+        username: user.username,
+        role: user.role
+      };
+
+      // Send back the user object on successful login
+      res.json(user);
+
+    } catch (error) {
+      console.error('Login failed:', error); // Log the actual error
+      res.status(500).json({ error: 'Login failed due to a server error' });
     }
-
-    res.json({ message: 'Login successful', user: rows[0] });
-  } catch (error) {
-    res.status(500).json({ error: 'Login failed' });
-  }
-});
+  });
 
 module.exports = router;
