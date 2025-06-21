@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(session({
-    secret: 'a-simple-secret-for-the-exam', // Hardcoded key
+    secret: 'a-simple-secret-for-the-exam', // Hardcoded key for exam
     resave: false, // Don't save session if unmodified
     saveUninitialized: false, // create session only when smt stored
     cookie: { secure: false } // true if using HTTPS
