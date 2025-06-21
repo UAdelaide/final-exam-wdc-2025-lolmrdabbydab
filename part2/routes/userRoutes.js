@@ -44,16 +44,16 @@ router.post('/login', async (req, res) => {
       const [rows] = await db.query(`
         SELECT user_id, username, role FROM Users
         WHERE username = ? AND password_hash = ?
-      `, [username, password]); // Using username as per video transcript
+      `, [username, password]);
 
-      // If no user is found, send an error
+      // send error when if user
       if (rows.length === 0) {
         return res.status(401).json({ error: 'Invalid username or password' });
       }
 
       const user = rows[0];
 
-      // --- IMPORTANT: Store user info in the session ---
+      // Store user info in the session
       req.session.user = {
         user_id: user.user_id,
         username: user.username,
