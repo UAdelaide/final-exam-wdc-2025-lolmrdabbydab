@@ -8,6 +8,12 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
+app.use(session({
+    secret: process.env.SESSION_SECRET || 'a-default-secret-key', // Secret key to sign session ID cookie. Use an environment variable for security.
+    resave: false, // Don't save session if unmodified
+    saveUninitialized: false, // Don't create session until something stored
+    cookie: { secure: false } // Set to true if using HTTPS
+}));
 
 // Routes
 const walkRoutes = require('./routes/walkRoutes');
