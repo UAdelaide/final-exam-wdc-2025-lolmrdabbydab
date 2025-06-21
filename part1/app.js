@@ -99,7 +99,6 @@ app.use('/api', apiRouter);
 // --- Server Startup ---
 async function startServer() {
     try {
-        // This object creation is reformatted to fix the max-len error
         const initialPoolConfig = {
             ...dbConfig,
             waitForConnections: true,
