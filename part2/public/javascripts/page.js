@@ -79,7 +79,7 @@ async function loadAllDogsTable() {
         // Wait for all image fetches to complete
         const dogsWithImages = await Promise.all(imageFetchPromises);
 
-        // 4. Iterate over the complete data and build the table rows
+        // Iterate over complete data & build the table rows
         dogsWithImages.forEach(dog => {
             const row = document.createElement('tr');
             row.innerHTML = `
@@ -93,13 +93,10 @@ async function loadAllDogsTable() {
 
     } catch (error) {
         console.error('Error loading the dog table:', error);
-        // Optionally, display an error message on the page.
     }
 }
 
-// --- ADD A CALL to the new function when the page loads ---
-// Place this at the very bottom of the file.
 document.addEventListener('DOMContentLoaded', () => {
-    // This ensures the DOM is fully loaded before we try to manipulate it.
+    // Ensures DOM is fully loaded before manipulat
     loadAllDogsTable();
 });
