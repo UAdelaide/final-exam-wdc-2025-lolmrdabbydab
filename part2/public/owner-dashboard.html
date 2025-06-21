@@ -118,11 +118,11 @@
 
         async function logout() {
           try {
-            // Send POST request to the logout endpoint
+            // Send POST request to logout endpoint
             const res = await fetch('/api/users/logout', { method: 'POST' });
             if (!res.ok) throw new Error('Logout failed');
 
-            // On success, redirect the user to the homepage
+            // Redirect user to homepage (if succeed)
             window.location.href = '/';
           } catch (err) {
             // Display the error if logout fails
