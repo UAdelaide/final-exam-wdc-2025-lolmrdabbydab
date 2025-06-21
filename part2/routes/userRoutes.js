@@ -53,14 +53,14 @@ router.post('/login', async (req, res) => {
 
       const user = rows[0];
 
-      // Store user info in the session
+      // Store user info in session
       req.session.user = {
         user_id: user.user_id,
         username: user.username,
         role: user.role
       };
 
-      // Send back the user object on successful login
+      // Send back user object (successful login)
       res.json(user);
 
     } catch (error) {
