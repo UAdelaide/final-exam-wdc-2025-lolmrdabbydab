@@ -41,7 +41,7 @@ let pool;
     const schemaSql = require('fs').readFileSync(require('path').join(__dirname, 'dogwalks.sql'), 'utf8');
     await pool.query(schemaSql);
 
-    // Insert seed data (empty)
+    // Insert data (if empty)
     const [userRows] = await pool.query('SELECT COUNT(*) AS count FROM Users');
     if (userRows[0].count === 0) {
       console.log('Tables are empty, inserting seed data...');
@@ -56,13 +56,12 @@ let pool;
 
   } catch (err) {
     console.error('Error setting up database:', err);
-    process.exit(1); // Exit if DB setup fails
+    process.exit(1);
   }
 })();
 
 
-// --- API Routes ---
-
+// -= API Routes =-
 // Q6. Route to get all dogs
 app.get('/api/dogs', async (req, res) => {
   try {
