@@ -23,7 +23,7 @@ function login(event) {
             const responseData = JSON.parse(this.responseText);
 
             if (this.status == 200) { // Success
-                // Redirect based on the user's role from the server response
+                // Redirect based on the user's role
                 if (responseData.role === 'owner') {
                     window.location.href = '/owner-dashboard.html';
                 } else if (responseData.role === 'walker') {
@@ -31,13 +31,13 @@ function login(event) {
                 } else {
                     errorElement.textContent = 'Login successful, but user role is unknown.';
                 }
-            } else { // Error (e.g., 401 Unauthorized)
+            } else {
                 errorElement.textContent = responseData.error || 'Login failed. Please try again.';
             }
         }
     };
 
-    // Open connection to our API endpoint
+    // Open connection to API endpoint
     xmlhttp.open("POST", "/api/users/login", true);
     xmlhttp.setRequestHeader("Content-type", "application/json");
     xmlhttp.send(JSON.stringify(user));
