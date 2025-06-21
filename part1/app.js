@@ -150,5 +150,7 @@ app.get('/api/walkers/summary', async (req, res) => {
       res.status(500).json({ error: 'An error occurred while fetching walker summary.' });
     }
   });
+  
+app.use(express.static(path.join(__dirname, 'public')));
 
 module.exports = app;
