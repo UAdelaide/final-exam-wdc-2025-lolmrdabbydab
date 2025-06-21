@@ -7,17 +7,14 @@ const path = require('path');
 const app = express();
 const port = 8080;
 
-// Middleware to parse JSON bodies
 app.use(express.json());
 
-// --- Database Configuration ---
 const dbConfig = {
     host: 'localhost',
     user: 'root',
     password: '',
 };
 
-// --- Database Seeding Function ---
 async function seedDatabase(pool) {
     try {
         console.log('Creating database and tables...');
