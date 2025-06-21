@@ -88,7 +88,6 @@ app.get('/api/dogs', async (req, res) => {
 // Q7. Route to get all open walk requests
 app.get('/api/walkrequests/open', async (req, res) => {
     try {
-      // The SQL query needs to join three tables: WalkRequests, Dogs, and Users.
       const sqlQuery = `
         SELECT
           wr.request_id,
