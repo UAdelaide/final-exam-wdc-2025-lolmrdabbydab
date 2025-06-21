@@ -40,7 +40,8 @@ function login(event) {
     // Connect to API endpoint
     xmlhttp.open("POST", "/api/users/login", true);
     xmlhttp.setRequestHeader("Content-type", "application/json");
-    
+
+    // Send conerted string to json
     xmlhttp.send(JSON.stringify(user));
 }
 
