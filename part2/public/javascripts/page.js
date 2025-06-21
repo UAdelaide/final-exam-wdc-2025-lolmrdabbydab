@@ -54,7 +54,7 @@ if (loginForm) {
 }
 
 /*
- * Fetches all dogs from, then fetches random image for each dog from the external dog.ceo API. Finally, it builds
+ * Fetches all dogs from -> fetches random image from external API -> builds
  * and displays the HTML table on the homepage.
  */
 async function loadAllDogsTable() {
