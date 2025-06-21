@@ -154,3 +154,8 @@ textarea {
 section {
     display: none;
 }
+
+.custom-table-header {
+    background-color: #FFFFFF;
+    color: #000000;           
+}
