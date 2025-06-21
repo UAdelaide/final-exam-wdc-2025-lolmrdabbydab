@@ -82,4 +82,28 @@ router.post('/logout', (req, res) => {
     });
 });
 
+// GET the dogs belonging to the currently logged-in owner
+router.get('/mydogs', async (req, res) => {
+    // Check if user is logged in & is owner.
+    if (!req.session.user || req.session.user.role !== 'owner') {
+      return res.status(401).json({ error: 'Unauthorized: You must be an owner to view your dogs.' });
+    }
+
+    // Get the owner's ID from their session.
+    const ownerId = req.session.user.user_id;
+
+    try {
+      // Query the database for all dogs where the owner_id matches the logged-in user.
+      const [dogs] = await db.query(
+        'SELECT dog_id, name FROM Dogs WHERE owner_id = ?',
+        [ownerId]
+      );
+      // Return the list of dogs as JSON.
+      res.json(dogs);
+    } catch (error) {
+      console.error('Failed to fetch owner dogs:', error);
+      res.status(500).json({ error: 'Failed to fetch your dogs' });
+    }
+  });
+
 module.exports = router;
