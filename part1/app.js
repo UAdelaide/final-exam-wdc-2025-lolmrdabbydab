@@ -62,7 +62,7 @@ let pool;
 
 
 // -= API Routes =-
-// Q6. Route to get all dogs
+// Q6. Get dogs
 app.get('/api/dogs', async (req, res) => {
   try {
     const sqlQuery = `
@@ -81,7 +81,7 @@ app.get('/api/dogs', async (req, res) => {
   }
 });
 
-// Q7. Route to get all open walk requests
+// Q7. Get all open walk requests
 app.get('/api/walkrequests/open', async (req, res) => {
     try {
       const sqlQuery = `
