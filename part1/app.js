@@ -81,7 +81,7 @@ app.get('/api/dogs', async (req, res) => {
   }
 });
 
-// Q7. Get all open walk requests
+// Q7. Route to get all open walk requests
 app.get('/api/walkrequests/open', async (req, res) => {
     try {
       const sqlQuery = `
