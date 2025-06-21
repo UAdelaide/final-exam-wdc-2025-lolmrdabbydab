@@ -19,7 +19,7 @@ let pool;
       multipleStatements: true
     });
 
-    // 2. Create the database if it doesn't exist
+    // Create db if not exist
     await initialConnection.query('CREATE DATABASE IF NOT EXISTS DogWalkService');
     await initialConnection.end();
 
