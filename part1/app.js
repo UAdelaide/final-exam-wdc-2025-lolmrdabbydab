@@ -23,7 +23,7 @@ let pool;
     await initialConnection.query('CREATE DATABASE IF NOT EXISTS DogWalkService');
     await initialConnection.end();
 
-    // connect to database
+    // Connect to db
     pool = mysql.createPool({
       host: 'localhost',
       user: 'root',
@@ -35,7 +35,6 @@ let pool;
       multipleStatements: true
     });
 
-    // Make the pool accessible to our routes
     app.locals.pool = pool;
 
     // 4. Create tables from dogwalks.sql
