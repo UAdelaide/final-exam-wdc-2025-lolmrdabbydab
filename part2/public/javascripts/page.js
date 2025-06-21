@@ -1,5 +1,3 @@
-// --- REPLACE the entire content of page.js with this ---
-
 // This function will handle the login form submission
 async function login(event) {
     // Prevent the form from submitting the traditional way
