@@ -59,6 +59,7 @@ router.post('/:id/apply', async (req, res) => {
   }
 });
 
+// GET walk requests for currently logged-in owner
 router.get('/myrequests', async (req, res) => {
     // Check if user is logged in & is an owner
     if (!req.session.user || req.session.user.role !== 'owner') {
