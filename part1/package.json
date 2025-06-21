@@ -6,6 +6,7 @@
         "start": "node ./bin/www"
     },
     "dependencies": {
+        "debug": "^4.4.1",
         "express": "^4.19.2",
         "morgan": "^1.10.0",
         "mysql2": "^3.10.1"
