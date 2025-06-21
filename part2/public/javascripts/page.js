@@ -3,7 +3,7 @@
  * Sends user credentials to the server and redirects on success.
  */
 function login(event) {
-    // Prevent pag reload upon form from submitting the traditional way, which causes a page refresh
+    // Prevent pag reload upon form submission
     event.preventDefault();
 
     let user = {
@@ -12,9 +12,9 @@ function login(event) {
     };
 
     const errorElement = document.getElementById('login-error');
-    errorElement.textContent = ''; // Clear previous errors
+    errorElement.textContent = '';
 
-    // Create AJAX Request using the XMLHttpRequest pattern from the starter file
+    // AJAX Request
     var xmlhttp = new XMLHttpRequest();
 
     // Define function to run on response
