@@ -96,7 +96,7 @@
 
                         // Ensure server responded with success status code
                         if (!res.ok) {
-                            // Throw error to be caught by the catch block
+                            // Throw error if not
                             throw new Error('Server responded with an error while fetching walks.');
                         }
 
