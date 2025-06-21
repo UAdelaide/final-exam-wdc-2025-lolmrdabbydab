@@ -81,7 +81,7 @@ app.get('/api/dogs', async (req, res) => {
   }
 });
 
-// Q7. Route to get all open walk requests
+// Q7. Get all open walk requests
 app.get('/api/walkrequests/open', async (req, res) => {
     try {
       const sqlQuery = `
@@ -108,7 +108,49 @@ app.get('/api/walkrequests/open', async (req, res) => {
   });
 
 
-// Q8. Will go here later...
+// Q8. Walker summary
+app.get('/api/walkers/summary', async (req, res) => {
+    try {
+      const sqlQuery = `
+        SELECT
+            u.username AS walker_username,
+            COALESCE(ratings_summary.total_ratings, 0) AS total_ratings,
+            ratings_summary.average_rating,
+            COALESCE(walks_summary.completed_walks, 0) AS completed_walks
+        FROM
+            Users u
+        LEFT JOIN
+            (SELECT
+                walker_id,
+                COUNT(rating_id) AS total_ratings,
+                AVG(rating) AS average_rating
+            FROM WalkRatings
+            GROUP BY walker_id) AS ratings_summary
+        ON u.user_id = ratings_summary.walker_id
+        LEFT JOIN
+            (SELECT
+                wa.walker_id,
+                COUNT(wr.request_id) AS completed_walks
+            FROM WalkApplications wa
+            JOIN WalkRequests wr ON wa.request_id = wr.request_id
+            WHERE wa.status = 'accepted' AND wr.status = 'completed'
+            GROUP BY wa.walker_id) AS walks_summary
+        ON u.user_id = walks_summary.walker_id
+        WHERE
+            u.role = 'walker'
+        ORDER BY
+            u.username;
+      `;
+
+      const [rows] = await pool.query(sqlQuery);
+      res.json(rows);
+
+    } catch (error) {
+      console.error('Error fetching walker summary:', error);
+      res.status(500).json({ error: 'An error occurred while fetching walker summary.' });
+    }
+  });
+
 
 
 // Simple welcome route for the root
