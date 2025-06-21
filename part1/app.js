@@ -9,10 +9,9 @@ app.use(express.json());
 
 let pool;
 
-// Immediately Invoked Function Expression (IIFE) to set up the database
 (async () => {
   try {
-    // 1. Create a connection pool to the MySQL server (without a specific database)
+    // Connection pool to the MySQL server (without a specific database)
     const initialConnection = await mysql.createConnection({
       host: 'localhost',
       user: 'root',
