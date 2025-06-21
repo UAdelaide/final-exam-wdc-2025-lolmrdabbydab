@@ -56,9 +56,9 @@
           }
         }
 
-        // MODIFY the applyToWalk function to use the dynamic user ID
+        // Modified applyToWalk function to use dynamic user ID
         async function applyToWalk(requestId) {
-          // Add a check to ensure we have the user's data before applying
+          // Add check to ensure user's data is avaliable before applying
           if (!currentUser.value) {
             error.value = 'Could not verify user. Please log in again.';
             return;
