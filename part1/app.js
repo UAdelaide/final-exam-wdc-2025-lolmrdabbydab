@@ -7,7 +7,6 @@ const app = express();
 app.use(logger('dev'));
 app.use(express.json());
 
-// This will hold our database connection pool
 let pool;
 
 // Immediately Invoked Function Expression (IIFE) to set up the database
