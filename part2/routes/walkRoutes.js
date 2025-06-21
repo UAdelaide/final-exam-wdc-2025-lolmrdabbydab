@@ -59,4 +59,28 @@ router.post('/:id/apply', async (req, res) => {
   }
 });
 
+router.get('/myrequests', async (req, res) => {
+    // Check if user is logged in & is an owner
+    if (!req.session.user || req.session.user.role !== 'owner') {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const ownerId = req.session.user.user_id;
+
+    try {
+      // to filter for only the dogs belonging to the logged-in owner.
+      const [rows] = await db.query(`
+        SELECT wr.*, d.name AS dog_name, d.size
+        FROM WalkRequests wr
+        JOIN Dogs d ON wr.dog_id = d.dog_id
+        WHERE d.owner_id = ?
+        ORDER BY wr.requested_time DESC
+      `, [ownerId]);
+      res.json(rows);
+    } catch (error) {
+      console.error('SQL Error fetching owner requests:', error);
+      res.status(500).json({ error: 'Failed to fetch your walk requests' });
+    }
+  });
+
 module.exports = router;
