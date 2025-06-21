@@ -90,7 +90,24 @@
                 const error = ref('');
                 const ownerDogs = ref([]);
 
-                
+                async function loadWalks() {
+                    try {
+                        const res = await fetch('/api/walks/myrequests');
+
+                        // ADD THIS CHECK: Ensure the server responded with a success status code
+                        if (!res.ok) {
+                            // If not, throw an error to be caught by the catch block
+                            throw new Error('Server responded with an error while fetching walks.');
+                        }
+
+                        const data = await res.json();
+                        walks.value = data;
+                    } catch (err) {
+                        // Now the catch block will be triggered by our specific error
+                        console.error('Error in loadWalks:', err);
+                        error.value = 'Failed to load walk requests';
+                    }
+                }
 
                 async function submitWalkRequest() {
                     try {
