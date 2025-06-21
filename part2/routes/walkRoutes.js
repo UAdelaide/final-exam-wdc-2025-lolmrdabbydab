@@ -68,7 +68,7 @@ router.get('/myrequests', async (req, res) => {
     const ownerId = req.session.user.user_id;
 
     try {
-      // to filter for only the dogs belonging to the logged-in owner.
+      // filter dogs belonging to logged-in owner
       const [rows] = await db.query(`
         SELECT wr.*, d.name AS dog_name, d.size
         FROM WalkRequests wr
@@ -81,6 +81,6 @@ router.get('/myrequests', async (req, res) => {
       console.error('SQL Error fetching owner requests:', error);
       res.status(500).json({ error: 'Failed to fetch your walk requests' });
     }
-  });
+});
 
 module.exports = router;
