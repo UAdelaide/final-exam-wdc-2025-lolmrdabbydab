@@ -151,12 +151,4 @@ app.get('/api/walkers/summary', async (req, res) => {
     }
   });
 
-
-
-// Simple welcome route for the root
-app.get('/', (req, res) => {
-  res.send('Welcome to the Dog Walking Service API. Use /api/dogs to see data.');
-});
-
-
 module.exports = app;
