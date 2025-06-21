@@ -97,6 +97,6 @@ async function loadAllDogsTable() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Ensures DOM is fully loaded before manipulat
+    // Ensures DOM is fully loaded before manipulation
     loadAllDogsTable();
 });
