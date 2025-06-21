@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dog Viewer</title>
+    <style>
+        /* Poor color contrast and confusing layout */
+        body {
+            background-color: #FAFAFA;
+            color: #BDBDBD; /* Very low contrast text */
+            font-family: 'Comic Sans MS', cursive, sans-serif; /* Unprofessional font */
+            text-align: center;
+        }
+
+        /* Use of non-semantic tags for titles */
+        b.title {
+            font-size: 1.5em;
+            display: block;
+            margin-bottom: 50px;
+        }
+
+        /* Tiny, hard-to-click button implemented as a div */
+        .fake-button {
+            background-color: #E0E0E0;
+            color: #9E9E9E;
+            padding: 2px 5px;
+            border: 1px solid #BDBDBD;
+            cursor: pointer;
+            display: inline-block;
+            width: 80px; /* Fixed small width */
+            font-size: 10px; /* Tiny font */
+        }
+
+        /* Make the image tiny and off-center */
+        img {
+            width: 150px;
+            height: 150px;
+            border: 5px dotted #FFCC80; /* Distracting border */
+            position: absolute;
+            top: 100px;
+            right: 50px;
+        }
+
+        .info-panel {
+            margin-top: 100px;
+            border: 1px solid #EEEEEE;
+            padding: 20px;
+        }
+
+        /* Make slider hard to use */
+        input[type=range] {
+            width: 500px; /* Excessively wide */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="app">
+        <b class="title">Critter of the Moment Display Unit</b>
+
+        <!-- Image with no alt text for bad accessibility -->
+        <img :src="dogImageUrl" v-if="dogImageUrl">
+
+        <div class="info-panel">
+            <p>To view the featured animal, please calibrate the viewer by setting the slider to exactly 50.</p>
+
+            <!-- Kinematic Load: Overly complex slider for a simple action -->
+            <input type="range" min="0" max="100" v-model.number="sliderValue">
+            <span>Current Value: {{ sliderValue }}</span>
+
+            <p>Once calibration is complete, you may proceed.</p>
+
+            <!-- Kinematic Load: Tiny button, placed far from its control -->
+            <!-- Accessibility: This is a div, not a button, so it's not keyboard focusable -->
+            <div
+                class="fake-button"
+                @click="fetchDogImage"
+                :style="{ cursor: isButtonDisabled ? 'not-allowed' : 'pointer' }"
+                >
+                Proceed
+            </div>
+
+            <!-- Cognitive Load: Scattered and inconsistently styled info -->
+            <div v-if="dogImageUrl" style="margin-top: 40px; text-align: left; font-size: 12px;">
+                <i>Name: Buddy</i> <!-- Using <i> for semantics is bad practice -->
+                <br>
+                <span>Breed: Good Boy</span>
+                <p>Age..... 5</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    dogImageUrl: null,
+                    sliderValue: 0
+                };
+            },
+            computed: {
+                isButtonDisabled() {
+                    return this.sliderValue !== 50;
+                }
+            },
+            methods: {
+                fetchDogImage() {
+                    if (this.isButtonDisabled) {
+                        // In a real bad design, this might do nothing, or show a cryptic error.
+                        // We'll just log to console.
+                        console.log("Calibration incorrect.");
+                        return;
+                    }
+                    fetch('https://dog.ceo/api/breeds/image/random')
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                this.dogImageUrl = data.message;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching dog image:', error);
+                        });
+                }
+            }
+        }).mount('#app');
+    </script>
+
+</body>
+</html>
