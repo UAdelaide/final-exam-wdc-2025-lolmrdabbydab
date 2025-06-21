@@ -9,8 +9,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '/public')));
 app.use(session({
     secret: 'a-simple-secret-for-the-exam', // Hardcoded key for exam
-    resave: false, // Don't save session if unmodified
-    saveUninitialized: false, // create session only when smt stored
+    resave: false, // Prevents session from being saved back to the session store if it was never modified during the request.
+    saveUninitialized: false, // Prevents a session from being created for a user until something is actually stored in session.
     cookie: { secure: false } // true if using HTTPS
 }));
 
