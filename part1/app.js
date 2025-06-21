@@ -11,12 +11,12 @@ let pool;
 
 (async () => {
   try {
-    // Connection pool to the MySQL server (without a specific database)
+    // Connect to MySQL
     const initialConnection = await mysql.createConnection({
       host: 'localhost',
       user: 'root',
       password: '',
-      multipleStatements: true // Allow multiple SQL queries at once for seeding
+      multipleStatements: true
     });
 
     // 2. Create the database if it doesn't exist
