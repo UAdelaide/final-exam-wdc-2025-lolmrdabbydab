@@ -4,13 +4,13 @@
  * Module dependencies.
  */
 const app = require('../app');
-const debug = require('debug')('part1:server'); // Changed for our project
+const debug = require('debug')('part1:server');
 const http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
-const port = normalizePort(process.env.PORT || '8080'); // Changed to our port
+const port = normalizePort(process.env.PORT || '8080');
 app.set('port', port);
 
 /**
