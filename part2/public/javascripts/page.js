@@ -3,7 +3,7 @@
  * Sends user credentials to the server and redirects on success.
  */
 function login(event) {
-    // Prevent pag reload upon form submission
+    // Prevent page reload upon form submission
     event.preventDefault();
 
     let user = {
