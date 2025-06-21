@@ -66,20 +66,20 @@ async function loadAllDogsTable() {
         const tableBody = document.getElementById('dog-table-body');
         tableBody.innerHTML = ''; // Clear existing table data
 
-        // Fetc For each dog, create a promise to fetch a random image.
+        // Fetch random image for each dog
         const imageFetchPromises = dogs.map(dog =>
             fetch('https://dog.ceo/api/breeds/image/random')
                 .then(res => res.json())
                 .then(imgData => {
-                    // Combine dog data with the fetched image URL.
+                    // Combine dog data w fetched image URL
                     return { ...dog, imageUrl: imgData.message };
                 })
         );
 
-        // 3. Wait for all image fetches to complete.
+        // Wait for all image fetches to complete
         const dogsWithImages = await Promise.all(imageFetchPromises);
 
-        // 4. Iterate over the complete data and build the table rows.
+        // 4. Iterate over the complete data and build the table rows
         dogsWithImages.forEach(dog => {
             const row = document.createElement('tr');
             row.innerHTML = `
