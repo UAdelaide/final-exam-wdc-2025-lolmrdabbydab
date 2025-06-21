@@ -28,7 +28,24 @@
             <button type="submit" class="btn btn-primary w-100">Log In</button>
         </form>
 
-        
+        <!-- Registered Dog Table Display -->
+        <div class="mt-5">
+            <h2 class="mb-3">All Registered Dogs</h2>
+            <table class="table table-striped table-bordered">
+            <thead class="table-dark">
+                <tr>
+                <th>Dog Name</th>
+                <th>Size</th>
+                <th>Owner</th>
+                <th>Photo</th>
+                </tr>
+            </thead>
+            <!-- The JavaScript will insert dog data into this table body -->
+            <tbody id="dog-table-body">
+                <!-- Rows will be added here dynamically -->
+            </tbody>
+            </table>
+        </div>
     </div>
 
     <!-- JS -->
