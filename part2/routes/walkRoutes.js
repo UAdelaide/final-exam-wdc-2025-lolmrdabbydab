@@ -83,4 +83,21 @@ router.get('/myrequests', async (req, res) => {
     }
 });
 
+// GET all dogs for the homepage table
+router.get('/dogs', async (req, res) => {
+    try {
+      // This query joins the Dogs and Users tables to get all necessary details.
+      const [rows] = await db.query(`
+        SELECT d.dog_id, d.name, d.size, u.username AS owner_username
+        FROM Dogs d
+        JOIN Users u ON d.owner_id = u.user_id
+        ORDER BY d.dog_id
+      `);
+      res.json(rows);
+    } catch (error) {
+      console.error('SQL Error fetching all dogs:', error);
+      res.status(500).json({ error: 'Failed to fetch list of all dogs' });
+    }
+  });
+
 module.exports = router;
