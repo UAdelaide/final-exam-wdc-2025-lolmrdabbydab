@@ -43,8 +43,7 @@ function login(event) {
     xmlhttp.send(JSON.stringify(user));
 }
 
-// Attach the login function to the form's submit event.
-// This ensures our login function is called when the user clicks the "Log In" button.
+// -= Log In =-
 const loginForm = document.getElementById('login-form');
 if (loginForm) {
   loginForm.addEventListener('submit', login);
