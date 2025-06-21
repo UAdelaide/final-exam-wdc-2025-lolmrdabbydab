@@ -80,7 +80,7 @@
             // Fetch session data
             const res = await fetch('/api/users/me');
 
-            // If user is not logged in, the server will send an error
+            // Send error if user not't logged in
             if (!res.ok) {
               // Redirect to login page if session is invalid or expired
               window.location.href = '/';
