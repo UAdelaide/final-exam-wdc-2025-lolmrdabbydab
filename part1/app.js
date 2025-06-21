@@ -1,7 +1,7 @@
-/* eslint-disable no-console */ // Disables no-console rule for the entire file
+/* eslint-disable no-console */
 const express = require('express');
 const mysql = require('mysql2/promise');
-const fs =require('fs').promises; // Use promise-based fs
+const fs =require('fs').promises;
 const path = require('path');
 
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.json());
 const dbConfig = {
     host: 'localhost',
     user: 'root',
-    password: '', // As per exam instructions
+    password: '',
 };
 
 // --- Database Seeding Function ---
