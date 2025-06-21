@@ -23,7 +23,7 @@ let pool;
     await initialConnection.query('CREATE DATABASE IF NOT EXISTS DogWalkService');
     await initialConnection.end();
 
-    // 3. Now create a connection pool to our specific database
+    // connect to database
     pool = mysql.createPool({
       host: 'localhost',
       user: 'root',
