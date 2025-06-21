@@ -11,7 +11,7 @@ app.use(session({
     secret: 'a-simple-secret-for-the-exam', // Hardcoded key for exam
     resave: false, // Prevents session from being saved back to the session store if it was never modified during the request.
     saveUninitialized: false, // Prevents a session from being created for a user until something is actually stored in session.
-    cookie: { secure: false } // true if using HTTPS
+    cookie: { secure: false }     // cookie.secure should be true if using HTTPS -> false for local dev using HTTP
 }));
 
 // Routes
