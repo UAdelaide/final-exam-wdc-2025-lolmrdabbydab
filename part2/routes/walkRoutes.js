@@ -74,7 +74,7 @@ router.get('/myrequests', async (req, res) => {
         SELECT wr.*, d.name AS dog_name, d.size
         FROM WalkRequests wr
         JOIN Dogs d ON wr.dog_id = d.dog_id
-        WHERE d.owner_id = ?
+        WHERE d.owner_id = ? AND wr.status = 'open' -- ADDED THIS CONDITION
         ORDER BY wr.requested_time DESC
       `, [ownerId]);
       res.json(rows);
