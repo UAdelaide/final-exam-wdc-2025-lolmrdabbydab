@@ -75,6 +75,21 @@
           }
         }
 
+        async function logout() {
+          try {
+            // Send a POST request to the logout endpoint
+            const res = await fetch('/api/users/logout', { method: 'POST' });
+            if (!res.ok) throw new Error('Logout failed');
+
+            // redirect user to homepage (if succeed)
+            window.location.href = '/';
+          } catch (err) {
+            // Display error if logout fails
+            error.value = err.message;
+          }
+        }
+
+
         onMounted(() => {
           loadWalkRequests();
         });
