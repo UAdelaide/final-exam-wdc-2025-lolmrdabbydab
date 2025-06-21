@@ -56,7 +56,7 @@ if (loginForm) {
 // Fetches all dogs from -> fetches random image from external API -> builds & displays table on homepage
 async function loadAllDogsTable() {
     try {
-        // 1. Fetch the list of all dogs from our own API.
+        // Fetch all dogs from API.
         const dogListResponse = await fetch('/api/walks/dogs');
         if (!dogListResponse.ok) {
             throw new Error('Failed to fetch dog list from our server.');
@@ -66,7 +66,7 @@ async function loadAllDogsTable() {
         const tableBody = document.getElementById('dog-table-body');
         tableBody.innerHTML = ''; // Clear existing table data
 
-        // 2. For each dog, create a promise to fetch a random image.
+        // Fetc For each dog, create a promise to fetch a random image.
         const imageFetchPromises = dogs.map(dog =>
             fetch('https://dog.ceo/api/breeds/image/random')
                 .then(res => res.json())
