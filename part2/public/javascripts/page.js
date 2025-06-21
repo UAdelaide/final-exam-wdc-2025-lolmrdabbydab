@@ -1,48 +1,56 @@
-// This function will handle the login form submission
-async function login(event) {
-    // Prevent the form from submitting the traditional way
+/*
+ * This file contains the client-side JavaScript for the Dog Walking Service.
+ * We will adapt the existing functions to handle login and other future interactions.
+ */
+
+/*
+ * Handles the user login process.
+ * Sends user credentials to the server and redirects on success.
+ */
+function login(event) {
+    // Prevent the form from submitting the traditional way, which causes a page refresh
     event.preventDefault();
 
-    // Get the values from the form inputs
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+    let user = {
+        username: document.getElementById('username').value,
+        password: document.getElementById('password').value
+    };
+
     const errorElement = document.getElementById('login-error');
+    errorElement.textContent = ''; // Clear previous errors
 
-    // Clear any previous error messages
-    errorElement.textContent = '';
+    // Create AJAX Request using the XMLHttpRequest pattern from the starter file
+    var xmlhttp = new XMLHttpRequest();
 
-    try {
-        const response = await fetch('/api/users/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-        });
+    // Define function to run on response
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4) { // Request is complete
+            const responseData = JSON.parse(this.responseText);
 
-        const data = await response.json();
-
-        if (!response.ok) {
-        // If the server returns an error, display it
-        errorElement.textContent = data.error || 'Login failed. Please try again.';
-        } else {
-        // On success, redirect based on role
-        if (data.role === 'owner') {
-            window.location.href = '/owner-dashboard.html';
-        } else if (data.role === 'walker') {
-            window.location.href = '/walker-dashboard.html';
-        } else {
-            errorElement.textContent = 'Login successful, but user role is unknown.';
+            if (this.status == 200) { // Success
+                // Redirect based on the user's role from the server response
+                if (responseData.role === 'owner') {
+                    window.location.href = '/owner-dashboard.html';
+                } else if (responseData.role === 'walker') {
+                    window.location.href = '/walker-dashboard.html';
+                } else {
+                    errorElement.textContent = 'Login successful, but user role is unknown.';
+                }
+            } else { // Error (e.g., 401 Unauthorized)
+                errorElement.textContent = responseData.error || 'Login failed. Please try again.';
+            }
         }
-        }
-    } catch (err) {
-        console.error('An error occurred during the login request:', err);
-        errorElement.textContent = 'A network error occurred. Please check your connection.';
-    }
+    };
+
+    // Open connection to our API endpoint
+    xmlhttp.open("POST", "/api/users/login", true);
+    xmlhttp.setRequestHeader("Content-type", "application/json");
+    xmlhttp.send(JSON.stringify(user));
 }
 
-// Add an event listener to the form to call our login function when it's submitted
+// Attach the login function to the form's submit event.
+// This ensures our login function is called when the user clicks the "Log In" button.
 const loginForm = document.getElementById('login-form');
 if (loginForm) {
-loginForm.addEventListener('submit', login);
+  loginForm.addEventListener('submit', login);
 }
