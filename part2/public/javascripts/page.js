@@ -48,6 +48,7 @@ function login(event) {
 
 // -= Log In =-
 const loginForm = document.getElementById('login-form');
+// trigger login function
 if (loginForm) {
   loginForm.addEventListener('submit', login);
 }
