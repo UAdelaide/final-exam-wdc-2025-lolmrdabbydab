@@ -85,7 +85,33 @@ app.get('/api/dogs', async (req, res) => {
   }
 });
 
-// Q7. Will go here later...
+// Q7. Route to get all open walk requests
+app.get('/api/walkrequests/open', async (req, res) => {
+    try {
+      // The SQL query needs to join three tables: WalkRequests, Dogs, and Users.
+      const sqlQuery = `
+        SELECT
+          wr.request_id,
+          d.name AS dog_name,
+          wr.requested_time,
+          wr.duration_minutes,
+          wr.location,
+          u.username AS owner_username
+        FROM WalkRequests wr
+        JOIN Dogs d ON wr.dog_id = d.dog_id
+        JOIN Users u ON d.owner_id = u.user_id
+        WHERE wr.status = 'open';
+      `;
+
+      const [rows] = await pool.query(sqlQuery);
+      res.json(rows);
+
+    } catch (error) {
+      console.error('Error fetching open walk requests:', error);
+      res.status(500).json({ error: 'An error occurred while fetching open walk requests.' });
+    }
+  });
+
 
 // Q8. Will go here later...
 
