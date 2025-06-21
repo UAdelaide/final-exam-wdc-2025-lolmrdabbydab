@@ -72,7 +72,6 @@ async function seedDatabase(pool) {
     }
 }
 
-// --- API Routes Setup ---
 const apiRouter = express.Router();
 
 apiRouter.get('/dogs', async (req, res) => {
@@ -96,7 +95,6 @@ apiRouter.get('/dogs', async (req, res) => {
 
 app.use('/api', apiRouter);
 
-// --- Server Startup ---
 async function startServer() {
     try {
         const initialPoolConfig = {
