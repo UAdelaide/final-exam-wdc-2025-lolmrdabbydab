@@ -1,9 +1,4 @@
 /*
- * This file contains the client-side JavaScript for the Dog Walking Service.
- * We will adapt the existing functions to handle login and other future interactions.
- */
-
-/*
  * Handles the user login process.
  * Sends user credentials to the server and redirects on success.
  */
