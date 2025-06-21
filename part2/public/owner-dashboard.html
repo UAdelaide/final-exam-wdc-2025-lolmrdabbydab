@@ -88,6 +88,7 @@
                 const walks = ref([]);
                 const message = ref('');
                 const error = ref('');
+                const ownerDogs = ref([]);
 
                 async function loadWalks() {
                     try {
@@ -123,6 +124,8 @@
                         message.value = '';
                     }
                 }
+
+                
 
                 async function logout() {
                     try {
