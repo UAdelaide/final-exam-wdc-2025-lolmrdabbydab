@@ -82,14 +82,14 @@ router.post('/logout', (req, res) => {
     });
 });
 
-// GET the dogs belonging to the currently logged-in owner
+// GET dogs belonging to currently logged-in owner
 router.get('/mydogs', async (req, res) => {
     // Check if user is logged in & is owner.
     if (!req.session.user || req.session.user.role !== 'owner') {
       return res.status(401).json({ error: 'Unauthorized: You must be an owner to view your dogs.' });
     }
 
-    // Get the owner's ID from their session.
+    // Get owner's ID from session.
     const ownerId = req.session.user.user_id;
 
     try {
