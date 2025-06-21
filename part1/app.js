@@ -1,6 +1,7 @@
+/* eslint-disable no-console */ // Disables no-console rule for the entire file
 const express = require('express');
 const mysql = require('mysql2/promise');
-const fs = require('fs').promises; // Use promise-based fs
+const fs =require('fs').promises; // Use promise-based fs
 const path = require('path');
 
 const app = express();
@@ -14,19 +15,18 @@ const dbConfig = {
     host: 'localhost',
     user: 'root',
     password: '', // As per exam instructions
-    // We connect without a specific database initially to create it
 };
 
 // --- Database Seeding Function ---
-// This function will run once on server startup.
 async function seedDatabase(pool) {
     try {
         console.log('Creating database and tables...');
-        // Read and execute the schema file to create db and tables
         const schemaSql = await fs.readFile(path.join(__dirname, 'dogwalks.sql'), 'utf-8');
-        const statements = schemaSql.split(/;\s*$/m); // Split statements correctly
+        const statements = schemaSql.split(/;\s*$/m);
+        // eslint-disable-next-line no-await-in-loop
         for (const statement of statements) {
             if (statement.trim()) {
+                // eslint-disable-next-line no-await-in-loop
                 await pool.query(statement);
             }
         }
@@ -34,8 +34,6 @@ async function seedDatabase(pool) {
         console.log('Database and tables created successfully.');
         console.log('Inserting seed data...');
 
-        // Now, insert the data from Question 5.
-        // NOTE: This SQL is directly from your answer to Q5.
         const insertSql = `
             INSERT INTO Users (username, email, password_hash, role) VALUES
             ('alice123', 'alice@example.com', 'hashed123', 'owner'),
@@ -59,33 +57,26 @@ async function seedDatabase(pool) {
             ((SELECT dog_id FROM Dogs WHERE name = 'Rocky' AND owner_id = (SELECT user_id FROM Users WHERE username = 'davidowner')), '2025-06-23 10:00:00', 45, 'North Adelaide Dog Park', 'cancelled');
         `;
         const insertStatements = insertSql.split(/;\s*$/m);
+        // eslint-disable-next-line no-await-in-loop
          for (const statement of insertStatements) {
             if (statement.trim()) {
+                // eslint-disable-next-line no-await-in-loop
                 await pool.query(statement);
             }
         }
-
         console.log('Seed data inserted successfully.');
-
     } catch (error) {
-        // We only care if the database doesn't exist. If it does, that's fine.
         if (error.code === 'ER_DB_CREATE_EXISTS') {
             console.log('Database already exists. Skipping seeding.');
         } else {
             console.error('Error during database seeding:', error);
-            // Exit the process if seeding fails catastrophically
             process.exit(1);
         }
     }
 }
 
-
 // --- API Routes Setup ---
-// We will define our routes here.
 const apiRouter = express.Router();
-
-// This is where the code for Q6, Q7, and Q8 will go.
-// For now, let's add the Q6 code.
 
 apiRouter.get('/dogs', async (req, res) => {
   try {
@@ -101,31 +92,38 @@ apiRouter.get('/dogs', async (req, res) => {
     const [rows] = await pool.query(sqlQuery);
     res.json(rows);
   } catch (error) {
-    console.error("Error fetching dogs:", error);
+    console.error('Error fetching dogs:', error);
     res.status(500).json({ error: 'An error occurred while fetching the list of dogs.' });
   }
 });
 
-// We will add the other two routes here later.
-
 app.use('/api', apiRouter);
-
 
 // --- Server Startup ---
 async function startServer() {
     try {
-        // Create a connection pool. This is better than a single connection.
-        const pool = mysql.createPool({ ...dbConfig, waitForConnections: true, connectionLimit: 10, queueLimit: 0, multipleStatements: true });
+        // This object creation is reformatted to fix the max-len error
+        const initialPoolConfig = {
+            ...dbConfig,
+            waitForConnections: true,
+            connectionLimit: 10,
+            queueLimit: 0,
+            multipleStatements: true
+        };
+        const pool = mysql.createPool(initialPoolConfig);
 
-        // Seed the database
         await seedDatabase(pool);
-
-        // Now that seeding is done (or skipped), connect to the specific database.
-        // We have to close the old pool and create a new one connected to the DogWalkService DB.
         await pool.end();
-        const mainPool = mysql.createPool({ ...dbConfig, database: 'DogWalkService', waitForConnections: true, connectionLimit: 10, queueLimit: 0 });
 
-        // Store the pool in app.locals to make it accessible in route handlers
+        const mainPoolConfig = {
+            ...dbConfig,
+            database: 'DogWalkService',
+            waitForConnections: true,
+            connectionLimit: 10,
+            queueLimit: 0
+        };
+        const mainPool = mysql.createPool(mainPoolConfig);
+
         app.locals.pool = mainPool;
         console.log('Connected to DogWalkService database.');
 
