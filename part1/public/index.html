@@ -70,7 +70,7 @@
             <p>Once calibration is complete, you may proceed.</p>
 
             <!-- Kinematic Load: Tiny button, placed far from its control -->
-            <!-- Accessibility: A div -> not a button, so it's not keyboard focusable -->
+            <!-- Accessibility: A div -> not a button -> not keyboard focusable -->
             <div
                 class="fake-button"
                 @click="fetchDogImage"
@@ -79,9 +79,9 @@
                 Proceed
             </div>
 
-            <!-- Cognitive Load: Scattered and inconsistently styled info -->
+            <!-- Cognitive Load: Scattered & inconsistently styled info -->
             <div v-if="dogImageUrl" style="margin-top: 40px; text-align: left; font-size: 12px;">
-                <i>Name: Buddy</i> <!-- Using <i> for semantics is bad practice -->
+                <i>Name: Buddy</i> <!-- <i> for semantics is bad practice -->
                 <br>
                 <span>Breed: Good Boy</span>
                 <p>Age..... 5</p>
