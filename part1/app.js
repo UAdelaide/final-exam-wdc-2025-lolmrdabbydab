@@ -108,7 +108,7 @@ app.get('/api/walkrequests/open', async (req, res) => {
   });
 
 
-// Q8. Walker summary
+// Q8. Get all walkers' summary
 app.get('/api/walkers/summary', async (req, res) => {
     try {
       const sqlQuery = `
