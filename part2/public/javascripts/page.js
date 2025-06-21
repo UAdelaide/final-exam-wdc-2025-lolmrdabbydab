@@ -6,6 +6,7 @@ function login(event) {
     // Prevent page reload upon form submission
     event.preventDefault();
 
+    // Get user input
     let user = {
         username: document.getElementById('username').value,
         password: document.getElementById('password').value
